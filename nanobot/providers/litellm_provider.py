@@ -22,16 +22,18 @@ class LiteLLMProvider(LLMProvider):
     """
     
     def __init__(
-        self, 
-        api_key: str | None = None, 
+        self,
+        api_key: str | None = None,
         api_base: str | None = None,
         default_model: str = "anthropic/claude-opus-4-5",
         extra_headers: dict[str, str] | None = None,
         provider_name: str | None = None,
+        reasoning_effort: str | None = None,
     ):
         super().__init__(api_key, api_base)
         self.default_model = default_model
         self.extra_headers = extra_headers or {}
+        self.reasoning_effort = reasoning_effort
         
         # Detect gateway / local deployment.
         # provider_name (from config key) is the primary signal;
@@ -149,6 +151,9 @@ class LiteLLMProvider(LLMProvider):
         if self.extra_headers:
             kwargs["extra_headers"] = self.extra_headers
         
+        if self.reasoning_effort:
+            kwargs["reasoning_effort"] = self.reasoning_effort
+
         if tools:
             kwargs["tools"] = tools
             kwargs["tool_choice"] = "auto"

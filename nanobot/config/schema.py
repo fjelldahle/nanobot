@@ -163,6 +163,7 @@ class AgentDefaults(BaseModel):
     temperature: float = 0.7
     max_tool_iterations: int = 20
     memory_window: int = 50
+    reasoning_effort: str | None = None  # "low", "medium", or "high" — passed to LiteLLM for models that support it
 
 
 class AgentsConfig(BaseModel):
